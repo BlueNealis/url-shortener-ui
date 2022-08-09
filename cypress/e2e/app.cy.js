@@ -22,4 +22,18 @@ describe('App', () => {
     cy.get('form').find('input').eq(1).type('https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
     cy.get('form').find('input').eq(1).should('have.value','https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
   })
+
+  it('Should be able to submit url and see the new shortened url on page', () => {
+    cy.get('form').find('input').eq(0).type('Great Title')
+    cy.get('form').find('input').eq(1).type('https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
+    cy.get('button').click().intercept('http://localhost:3001/api/v1/urls', {
+      method: 'POST',
+      fixture:'responseUrls.json',
+    })
+    cy.reload()
+    cy.get('.url').should('have.length', 2)
+    cy.get('.url').eq(1).should('contain','Great Title')
+    .and('contain', 'https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
+    .and('contain', 'https://tinyurl.com/yckzurra')
+  })
 })
