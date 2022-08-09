@@ -1,13 +1,12 @@
 describe('App', () => {
   beforeEach(() => {
-    cy.visit('localhost:3000')
     cy.intercept('http://localhost:3001/api/v1/urls', {
-      method: 'GET',
-      fixture: 'urls.json'
-    })
+      statusCode: 200,
+      fixture: 'urls.json'})
+    cy.visit('localhost:3000')
   })
   it('Should have title Url Shortener on page', () => {
-    cy.contains('URL shortner')
+    cy.contains('URL Shortener')
   })
 
   it('Should have the stored urls displaying on page', () => {
