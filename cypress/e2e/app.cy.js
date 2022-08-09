@@ -18,5 +18,8 @@ describe('App', () => {
 
   it('Should reflect when user types into form', () => {
     cy.get('form').find('input').eq(0).type('Great Title')
+    cy.get('form').find('input').eq(0).should('have.value','Great Title')
+    cy.get('form').find('input').eq(1).type('https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
+    cy.get('form').find('input').eq(1).should('have.value','https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
   })
 })
