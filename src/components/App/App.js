@@ -8,11 +8,16 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      urls: []
+      urls: [],
     }
   }
 
   componentDidMount() {
+    getUrls().then(data => this.setState({urls: data.urls}))
+  }
+
+  handleSubmit = (e, title, url) => {
+    e.preventDefault();
   }
 
   render() {
@@ -20,7 +25,7 @@ export class App extends Component {
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm handleSubmit={this.handleSubmit}/>
         </header>
 
         <UrlContainer urls={this.state.urls}/>
