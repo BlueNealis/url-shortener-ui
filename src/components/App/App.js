@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, postUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -18,6 +18,8 @@ export class App extends Component {
 
   handleSubmit = (e, title, url) => {
     e.preventDefault();
+    console.log(title, url)
+    postUrls({long_url:`${url}`, title:`${title}`}).then(data => console.log(data))
   }
 
   render() {
