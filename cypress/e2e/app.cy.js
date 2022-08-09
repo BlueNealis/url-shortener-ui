@@ -6,7 +6,7 @@ describe('App', () => {
       fixture: 'urls.json'
     })
   })
-  it('Should have title Url Shortner on page', () => {
+  it('Should have title Url Shortener on page', () => {
     cy.contains('URL shortner')
   })
 
