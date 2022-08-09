@@ -36,4 +36,9 @@ describe('App', () => {
     .and('contain', 'https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
     .and('contain', 'https://tinyurl.com/yckzurra')
   })
+
+  it('Should tell user if the server failed', () => {
+    cy.intercept('http://localhost:3001/api/v1/urls', {statusCode: 500})
+    cy.contains('Sorry, server error please try again later')
+  })
 })
