@@ -6,7 +6,7 @@ export const getUrls = () => {
 export const postUrls = (data) => {
   return fetch('http://localhost:3001/api/v1/urls', {
     method: 'POST',
-    header: {
+    headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)

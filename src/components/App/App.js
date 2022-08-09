@@ -18,8 +18,7 @@ export class App extends Component {
 
   handleSubmit = (e, title, url) => {
     e.preventDefault();
-    console.log(title, url)
-    postUrls({long_url:`${url}`, title:`${title}`}).then(data => console.log(data))
+    postUrls({long_url:url, title: title}).then(data => this.setState({urls: [...this.state.urls, data]}))
   }
 
   render() {
