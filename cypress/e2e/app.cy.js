@@ -26,7 +26,7 @@ describe('App', () => {
   it('Should be able to submit url and see the new shortened url on page', () => {
     cy.get('form').find('input').eq(0).type('Great Title')
     cy.get('form').find('input').eq(1).type('https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
-    cy.get('button').click().intercept('http://localhost:3001/api/v1/urls', {
+    cy.get('button').eq(0).click().intercept('http://localhost:3001/api/v1/urls', {
       method: 'POST',
       fixture:'responseUrls.json',
     })
@@ -35,6 +35,23 @@ describe('App', () => {
     cy.get('.url').eq(1).should('contain','Great Title')
     .and('contain', 'https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
     .and('contain', 'https://tinyurl.com/yckzurra')
+  })
+
+  it('Should be able to delete url', () => {
+    cy.get('form').find('input').eq(0).type('Great Title')
+    cy.get('form').find('input').eq(1).type('https://www.istockphoto.com/photo/3d-illustration-background-of-jellyfish-jellyfish-swims-in-the-ocean-sea-light-gm1033700106-276801817?phrase=jellyfish')
+    cy.get('button').eq(0).click().intercept('http://localhost:3001/api/v1/urls', {
+      method: 'POST',
+      fixture:'responseUrls.json',
+    })
+    cy.reload()
+    cy.get('.url').should('have.length', 2)
+    cy.get('.delete-button').eq(1).click().intercept('http://localhost:3001/api/v1/urls', {
+      method: 'GET',
+      fixture:'urls.json',
+    })
+    cy.reload()
+    cy.get('.url').should('have.length', 1)
   })
 
 })
