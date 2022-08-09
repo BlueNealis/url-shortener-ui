@@ -1,6 +1,11 @@
 export const getUrls = () => {
   return fetch('http://localhost:3001/api/v1/urls')
-      .then(response => response.json())
+      .then(response => {
+        if(!response.ok){
+          return 'Sorry, server error please try again later'
+        }
+        return response.json()
+      })
 }
 
 export const postUrls = (data) => {
@@ -11,5 +16,12 @@ export const postUrls = (data) => {
     },
     body: JSON.stringify(data)
   })
-  .then(response => response.json())
+  .then(response => {
+    if(!response.ok){
+      return 'Sorry, server error please try again later'
+    }
+    return response.json()
+  })
+
+
 }

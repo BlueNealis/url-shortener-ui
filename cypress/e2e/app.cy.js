@@ -37,8 +37,4 @@ describe('App', () => {
     .and('contain', 'https://tinyurl.com/yckzurra')
   })
 
-  it('Should tell user if the server failed', () => {
-    cy.intercept('http://localhost:3001/api/v1/urls', {statusCode: 500})
-    cy.contains('Sorry, server error please try again later')
-  })
 })

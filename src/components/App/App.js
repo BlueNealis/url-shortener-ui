@@ -9,16 +9,25 @@ export class App extends Component {
     super(props);
     this.state = {
       urls: [],
+      errorMessage: ''
     }
   }
 
   componentDidMount() {
-    getUrls().then(data => this.setState({urls: data.urls}))
+      getUrls()
+      .catch(err => this.setState({errorMessage:'Sorry, server error please try again later'}))
+      .then(data => this.setState({urls: data.urls}))
   }
 
   handleSubmit = (e, title, url) => {
     e.preventDefault();
-    postUrls({long_url:url, title: title}).then(data => this.setState({urls: [...this.state.urls, data]}))
+    postUrls({long_url:url, title: title})
+    .then(data => {
+      if(data === 'Sorry, server error please try again later') {
+      return this.setState({errorMessage: data})
+      }
+      return this.setState({urls: [...this.state.urls, data]})
+    })
   }
 
   render() {
@@ -29,7 +38,8 @@ export class App extends Component {
           <UrlForm handleSubmit={this.handleSubmit}/>
         </header>
 
-        <UrlContainer urls={this.state.urls}/>
+        {this.state.errorMessage?<h1 style={{color:'red'}}>{this.state.errorMessage}</h1>:
+        <UrlContainer urls={this.state.urls}/>}
       </main>
     );
   }
