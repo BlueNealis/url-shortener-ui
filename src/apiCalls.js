@@ -22,6 +22,13 @@ export const postUrls = (data) => {
     }
     return response.json()
   })
-
-
 }
+
+  export const deleteUrls = (id) => {
+    return fetch(`http://localhost:3001/api/v1/urls/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+      })
+  }

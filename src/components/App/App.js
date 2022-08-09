@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls, postUrls } from '../../apiCalls';
+import { getUrls, postUrls, deleteUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -30,6 +30,13 @@ export class App extends Component {
     })
   }
 
+  handleDelete = (e, id) => {
+    deleteUrls(id)
+    getUrls()
+    .catch(err => this.setState({errorMessage:'Sorry, server error please try again later'}))
+    .then(data => this.setState({urls: data.urls}))
+  }
+
   render() {
     return (
       <main className="App">
@@ -39,7 +46,7 @@ export class App extends Component {
         </header>
 
         {this.state.errorMessage?<h1 style={{color:'red'}}>{this.state.errorMessage}</h1>:
-        <UrlContainer urls={this.state.urls}/>}
+        <UrlContainer handleDelete={this.handleDelete} urls={this.state.urls}/>}
       </main>
     );
   }
